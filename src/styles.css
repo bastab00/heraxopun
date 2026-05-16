@@ -1,0 +1,166 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-forest: var(--forest);
+  --color-sage: var(--sage);
+  --color-beige: var(--beige);
+  --color-paper: var(--paper);
+  --color-brown: var(--brown);
+  --color-ink: var(--ink);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-hand: var(--font-hand);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Heraxopun palette */
+  --paper: oklch(0.965 0.018 85);          /* warm off-white */
+  --beige: oklch(0.9 0.025 80);            /* earthy beige */
+  --sage: oklch(0.72 0.045 145);           /* sage green */
+  --forest: oklch(0.32 0.05 150);          /* deep forest */
+  --brown: oklch(0.42 0.06 55);            /* muted brown accent */
+  --ink: oklch(0.22 0.015 80);             /* near-black warm */
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--forest);
+  --primary-foreground: var(--paper);
+  --secondary: var(--beige);
+  --secondary-foreground: var(--ink);
+  --muted: oklch(0.93 0.015 80);
+  --muted-foreground: oklch(0.45 0.025 70);
+  --accent: var(--sage);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.55 0.18 25);
+  --destructive-foreground: var(--paper);
+  --border: oklch(0.85 0.02 75);
+  --input: oklch(0.85 0.02 75);
+  --ring: var(--forest);
+
+  --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-hand: "Caveat", "Comic Sans MS", cursive;
+
+  --shadow-paper: 0 1px 2px rgba(60, 50, 40, 0.06), 0 8px 24px -12px rgba(60, 50, 40, 0.18);
+  --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dark {
+  --background: oklch(0.18 0.012 80);
+  --foreground: var(--paper);
+  --card: oklch(0.22 0.012 80);
+  --card-foreground: var(--paper);
+  --popover: oklch(0.22 0.012 80);
+  --popover-foreground: var(--paper);
+  --primary: var(--sage);
+  --primary-foreground: var(--ink);
+  --secondary: oklch(0.28 0.02 80);
+  --secondary-foreground: var(--paper);
+  --muted: oklch(0.26 0.015 80);
+  --muted-foreground: oklch(0.7 0.02 80);
+  --accent: var(--sage);
+  --accent-foreground: var(--ink);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--sage);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: var(--forest);
+    color: var(--paper);
+  }
+}
+
+@layer utilities {
+  .font-hand { font-family: var(--font-hand); }
+  .font-display { font-family: var(--font-display); }
+
+  /* Subtle film grain overlay */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .tape::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 60px;
+    height: 18px;
+    background: oklch(0.92 0.04 85 / 0.7);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  .underline-hand {
+    background-image: linear-gradient(transparent 92%, var(--brown) 92%, var(--brown) 96%, transparent 96%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
